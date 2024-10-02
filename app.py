@@ -13,7 +13,7 @@ def create_db_table():
         conn = connect_to_db()
         conn.execute('''
         CREATE TABLE users (
-            user_id INTEGER PRIMARY KEY NOT NULL,
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
             phone TEXT NOT NULL,
@@ -27,6 +27,18 @@ def create_db_table():
         print(f"User table creation failed: {e}")
     finally:
         conn.close()
+
+def drop_table():
+    try:
+        conn = connect_to_db()
+        conn.execute('DROP TABLE IF EXISTS users;')
+        conn.commit()
+        print("Table dropped successfully")
+    except Exception as e:
+        print(f"Failed to drop table: {e}")
+    finally:
+        conn.close()
+
 
 def insert_user(user):
     inserted_user = {}
